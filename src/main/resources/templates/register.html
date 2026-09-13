@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar conta | Adega Caminho Novo</title>
+  <th:block th:replace="~{fragments/layout :: head-assets}"></th:block>
+  <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-page">
+
+<div th:replace="~{fragments/layout :: header('register', true)}"></div>
+
+<main class="auth-main">
+  <div class="auth-card auth-card-wide">
+
+    <a class="auth-brand" th:href="@{/}">
+      <h2>ADEGA</h2>
+      <h1>CAMINHO NOVO</h1>
+      <small>VINHOS 100% NACIONAIS</small>
+    </a>
+
+    <div class="auth-divider">&#9670;</div>
+
+    <h3 class="auth-title">CRIAR CONTA</h3>
+    <p class="auth-subtitle">Cadastre-se para comprar os melhores vinhos nacionais.</p>
+
+    <form th:action="@{/register}" th:object="${registroForm}" method="post" novalidate>
+
+      <div class="form-group">
+        <label for="nome">NOME COMPLETO</label>
+        <input type="text" id="nome" th:field="*{nome}"
+               th:classappend="${#fields.hasErrors('nome')} ? ' input-error' : ''"
+               placeholder="Como devemos te chamar">
+        <span class="field-error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-MAIL</label>
+        <input type="email" id="email" th:field="*{email}"
+               th:classappend="${#fields.hasErrors('email')} ? ' input-error' : ''"
+               placeholder="seu@email.com">
+        <span class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">SENHA</label>
+        <input type="password" id="senha" th:field="*{senha}"
+               th:classappend="${#fields.hasErrors('senha')} ? ' input-error' : ''"
+               placeholder="Mínimo 8 caracteres">
+        <span class="field-error" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></span>
+        <p class="password-hint">Use ao menos 8 caracteres, com pelo menos uma letra e um número.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmacaoSenha">CONFIRMAR SENHA</label>
+        <input type="password" id="confirmacaoSenha" th:field="*{confirmacaoSenha}"
+               th:classappend="${#fields.hasErrors('confirmacaoSenha')} ? ' input-error' : ''"
+               placeholder="Repita a senha">
+        <span class="field-error" th:if="${#fields.hasErrors('confirmacaoSenha')}"
+              th:errors="*{confirmacaoSenha}"></span>
+      </div>
+
+      <button type="submit" class="btn-auth">CADASTRAR</button>
+    </form>
+
+    <div class="auth-links">
+      Já tem uma conta?
+      <a th:href="@{/login}">Voltar para o login</a>
+    </div>
+
+  </div>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+</body>
+</html>
