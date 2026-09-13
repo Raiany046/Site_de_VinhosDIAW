@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adega Caminho Novo - Vinhos 100% Nacionais</title>
+  <th:block th:replace="~{fragments/layout :: head-assets}"></th:block>
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: header('home', false)}"></div>
+
+<!-- hero -->
+<section class="hero">
+  <div class="hero-content">
+    <img th:src="@{/img/caminho-novo.png}" alt="Adega Caminho Novo" class="hero-img">
+  </div>
+</section>
+
+<!-- diferenciais -->
+<section class="features">
+  <div class="container features-grid">
+    <div class="feature-card">
+      <i class="fa-solid fa-wine-bottle"></i>
+      <div>
+        <h4>VINHOS DO BRASIL</h4>
+        <p>O melhor de cada região para você.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <i class="fa-solid fa-sun"></i>
+      <div>
+        <h4>TERROIR NACIONAL</h4>
+        <p>A diversidade do Brasil em cada garrafa.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <i class="fa-solid fa-map-location-dot"></i>
+      <div>
+        <h4>PRODUÇÃO BRASILEIRA</h4>
+        <p>Apoie produtores nacionais.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <i class="fa-solid fa-champagne-glasses"></i>
+      <div>
+        <h4>HISTÓRIA QUE BRINDA</h4>
+        <p>Cada vinho carrega uma história única.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- destaques -->
+<section class="products-section container">
+  <h2 class="section-title">DESTAQUES</h2>
+  <div class="section-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&#10022;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <div class="products-grid">
+
+    <div class="product-card">
+      <span class="badge">-10%</span>
+      <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+      <div class="product-img">
+        <img th:src="@{/img/vinhos/aurora.png}" alt="Aurora Reserva Merlot">
+      </div>
+      <div class="product-info">
+        <h3>Aurora Reserva Merlot</h3>
+        <span class="region">Serra Gaúcha - RS</span>
+        <div class="rating">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(32)</span></div>
+        <div class="price">
+          <span class="current">R$ 89,90</span>
+          <span class="old">R$ 99,90</span>
+        </div>
+        <a href="#" class="btn-outline">VER DETALHES</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <span class="badge">-8%</span>
+      <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+      <div class="product-img">
+        <img th:src="@{/img/vinhos/miolosele.png}" alt="Miolo Seleção Cabernet">
+      </div>
+      <div class="product-info">
+        <h3>Miolo Seleção Cabernet Sauvignon</h3>
+        <span class="region">Campanha Gaúcha - RS</span>
+        <div class="rating">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(48)</span></div>
+        <div class="price">
+          <span class="current">R$ 79,90</span>
+          <span class="old">R$ 87,00</span>
+        </div>
+        <a href="#" class="btn-outline">VER DETALHES</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <span class="badge">-12%</span>
+      <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+      <div class="product-img">
+        <img th:src="@{/img/vinhos/casa-valduga.png}" alt="Casa Valduga Terroir">
+      </div>
+      <div class="product-info">
+        <h3>Casa Valduga Terroir Chardonnay</h3>
+        <span class="region">Serra Gaúcha - RS</span>
+        <div class="rating">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(27)</span></div>
+        <div class="price">
+          <span class="current">R$ 109,90</span>
+          <span class="old">R$ 125,00</span>
+        </div>
+        <a href="#" class="btn-outline">VER DETALHES</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="center-btn">
+    <a href="#" class="btn-outline-lg">VER TODOS OS VINHOS</a>
+  </div>
+</section>
+
+<!-- banners -->
+<section class="banners-section container">
+  <div class="banners-grid">
+
+    <div class="banner-card banner-regiao">
+      <div class="banner-content">
+        <h3>VINHOS POR REGIÃO</h3>
+        <a href="#" class="btn-banner">EXPLORAR</a>
+      </div>
+    </div>
+
+    <div class="banner-card banner-tipo">
+      <div class="banner-content">
+        <h3>VINHOS POR TIPO</h3>
+        <a href="#" class="btn-banner">EXPLORAR</a>
+      </div>
+    </div>
+
+    <div class="banner-card banner-kits">
+      <div class="banner-content">
+        <h3>KITS &amp; CESTAS</h3>
+        <a href="#" class="btn-banner">MONTAR KIT</a>
+      </div>
+    </div>
+
+    <div class="banner-card banner-ofertas">
+      <div class="banner-content">
+        <h3>OFERTAS ESPECIAIS</h3>
+        <a href="#" class="btn-banner">APROVEITAR</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- newsletter -->
+<section class="newsletter">
+  <div class="container newsletter-content">
+    <div class="news-text">
+      <i class="fa-regular fa-envelope news-icon"></i>
+      <div>
+        <h3>RECEBA NOVIDADES E OFERTAS EXCLUSIVAS</h3>
+        <p>Cadastre seu e-mail e fique por dentro das melhores seleções de vinhos do Brasil.</p>
+      </div>
+    </div>
+    <form class="news-form" th:action="@{/register}" method="get">
+      <input type="email" name="email" placeholder="Seu melhor e-mail" required>
+      <button type="submit">CADASTRAR</button>
+    </form>
+  </div>
+</section>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+</body>
+</html>
