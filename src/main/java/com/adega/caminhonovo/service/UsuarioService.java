@@ -28,7 +28,6 @@ public class UsuarioService {
             throw new EmailJaCadastradoException(email);
         }
 
-        // a senha so vai para o banco depois de virar hash
         Usuario usuario = new Usuario(
                 form.getNome().trim(),
                 email,

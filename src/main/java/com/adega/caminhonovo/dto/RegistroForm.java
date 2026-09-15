@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-// Guarda os dados do formulario de cadastro e as regras de validacao.
 public class RegistroForm {
 
     @NotBlank(message = "Informe seu nome.")

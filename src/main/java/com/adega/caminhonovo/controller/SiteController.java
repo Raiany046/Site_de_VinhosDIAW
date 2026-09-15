@@ -22,7 +22,6 @@ public class SiteController {
         return "home";
     }
 
-    // area restrita: o Principal so chega preenchido se o usuario estiver logado
     @GetMapping("/minha-conta")
     public String minhaConta(Principal principal, Model model) {
         Usuario usuario = usuarioService.buscarPorEmail(principal.getName()).orElseThrow();

@@ -170,7 +170,7 @@ Com a aplicação rodando, acesse <http://localhost:8080/h2-console> para inspec
 
 | Campo | Valor |
 | --- | --- |
-| JDBC URL | `jdbc:h2:file:./data/adega` |
+| JDBC URL | `jdbc:h2:file:./data/adega;AUTO_SERVER=TRUE` |
 | User Name | `sa` |
 | Password | *(vazio)* |
 

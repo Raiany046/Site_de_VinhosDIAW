@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-// E aqui que o Spring Security busca o usuario no banco durante o login.
 @Service
 public class UsuarioDetailsService implements UserDetailsService {
 
