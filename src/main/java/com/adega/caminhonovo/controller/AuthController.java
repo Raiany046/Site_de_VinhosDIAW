@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,9 +65,8 @@ public class AuthController {
         try {
             usuarioService.registrar(registroForm);
         } catch (EmailJaCadastradoException e) {
-            resultado.addError(new FieldError("registroForm", "email",
-                    registroForm.getEmail(), false, null, null,
-                    "Este e-mail já está cadastrado. Tente fazer login."));
+            resultado.rejectValue("email", "email.duplicado",
+                    "Este e-mail já está cadastrado. Tente fazer login.");
             return "register";
         }
 
