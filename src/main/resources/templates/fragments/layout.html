@@ -8,7 +8,6 @@
 </head>
 <body>
 
-<!-- fontes e css usados em todas as paginas -->
 <th:block th:fragment="head-assets">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +17,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </th:block>
 
-<!-- header -->
 <header th:fragment="header(pagina, solido)"
         class="main-header"
         th:classappend="${solido} ? ' header-solid' : ''">
@@ -37,7 +35,6 @@
     <div class="header-icons">
       <a href="#" title="Buscar"><i class="fa-solid fa-magnifying-glass"></i></a>
 
-      <!-- visitante: o icone leva para o login -->
       <a sec:authorize="!isAuthenticated()" th:href="@{/login}" title="Entrar">
         <i class="fa-regular fa-user"></i>
       </a>
@@ -46,7 +43,6 @@
         <i class="fa-solid fa-bag-shopping"></i><span>0</span>
       </a>
 
-      <!-- logado: mostra o e-mail e o botao de sair -->
       <span sec:authorize="isAuthenticated()" class="header-user">
         <a th:href="@{/minha-conta}" class="user-name" th:text="${#authentication.name}">usuario</a>
         <form th:action="@{/logout}" method="post" class="logout-form">
@@ -57,7 +53,6 @@
   </div>
 </header>
 
-<!-- rodape -->
 <footer th:fragment="footer" class="main-footer">
   <div class="container">
     <div class="footer-grid">
