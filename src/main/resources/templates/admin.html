@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Adega Caminho Novo</title>
+    
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <!-- Cabeçalho com Logo -->
+    <div class="admin-header">
+        <img th:src="@{/img/logo-adega.png}" alt="Adega Caminho Novo Logo" class="admin-logo">
+        <div class="admin-brand">
+            <h2>ADEGA</h2>
+            <h1>CAMINHO NOVO</h1>
+            <small>PAINEL DE CONTROLE</small>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="admin-content">
+
+        <span class="admin-label"><i class="fa-solid fa-lock"></i> ÁREA RESTRITA</span>
+
+        <h1>Painel do Administrador</h1>
+
+        <p class="admin-message">
+            Bem-vindo(a) de volta à gestão da <strong>Adega Caminho Novo</strong>!
+        </p>
+
+        <div class="admin-divider">❖</div>
+
+        <p class="admin-description">
+            Gerencie o catálogo de vinhos, pedidos, estoque e configurações do sistema através do menu de acesso rápido abaixo.
+        </p>
+
+        <!-- Menu de Ações Administrativas -->
+        <div class="admin-actions">
+            <a th:href="@{/admin/vinhos}" class="admin-card-btn">
+                <i class="fa-solid fa-wine-bottle"></i>
+                <span>Gerenciar Vinhos</span>
+            </a>
+            <a th:href="@{/admin/pedidos}" class="admin-card-btn">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Pedidos</span>
+            </a>
+            <a th:href="@{/admin/usuarios}" class="admin-card-btn">
+                <i class="fa-solid fa-users-gear"></i>
+                <span>Usuários</span>
+            </a>
+        </div>
+
+        <!-- Botão de Sair -->
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="admin-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Sair da Conta
+            </button>
+        </form>
+
+    </div>
+
+    <!-- Rodapé Interno -->
+    <div class="admin-footer">
+        <p>&copy; 2026 Adega Caminho Novo. Sistema Restrito.</p>
+    </div>
+
+</div>
+
+</body>
+</html>
