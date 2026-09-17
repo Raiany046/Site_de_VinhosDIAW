@@ -1,0 +1,281 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #120504;
+    --bg-card: #1c0a08;
+    --bg-input: #180907;
+    --gold-primary: #b88d4c;
+    --gold-light: #d4b272;
+    --text-light: #f5e8d3;
+    --text-muted: #a69282;
+    --border-gold: #4a3421;
+    --success: #c2e0af;
+    --error: #f0b5ad;
+
+    --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+    --font-body: 'Lato', 'Segoe UI', Arial, sans-serif;
+
+    --radius: 10px;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    font-family: var(--font-body);
+    color: var(--text-light);
+    -webkit-font-smoothing: antialiased;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(184, 141, 76, 0.10), transparent 35%),
+        radial-gradient(circle at 90% 90%, rgba(120, 30, 24, 0.22), transparent 35%),
+        var(--bg-dark);
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-container {
+    width: 100%;
+    max-width: 680px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    animation: fade-in 0.5s ease-out;
+}
+
+.admin-content {
+    padding: 2.5rem 2.75rem;
+    text-align: center;
+}
+
+.admin-label {
+    display: inline-block;
+    margin-bottom: 1.1rem;
+    padding: 0.35rem 0.95rem;
+    border: 1px solid var(--border-gold);
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: var(--gold-primary);
+}
+
+.admin-content h1 {
+    margin-bottom: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--gold-light);
+}
+
+.admin-message {
+    font-size: 1rem;
+    color: var(--text-light);
+}
+
+.admin-message strong {
+    color: var(--gold-light);
+}
+
+.admin-divider {
+    margin: 1.4rem 0;
+    font-size: 0.9rem;
+    color: var(--gold-primary);
+}
+
+.admin-description {
+    margin-bottom: 0.45rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.admin-description strong {
+    color: var(--gold-light);
+}
+
+.admin-btn {
+    width: 100%;
+    margin-top: 1.75rem;
+    padding: 0.9rem;
+    background-color: var(--gold-primary);
+    border: 1px solid var(--gold-primary);
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: #1a0a06;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.25s, transform 0.15s;
+}
+
+.admin-btn:hover {
+    background-color: var(--gold-light);
+    transform: translateY(-1px);
+}
+
+.admin-btn i {
+    margin-right: 0.4rem;
+}
+
+.admin-header {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.admin-header::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    z-index: -2;
+    background: url('/images/caminho-novo.png') center / cover no-repeat;
+    filter: blur(9px) saturate(0.7);
+}
+
+.admin-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(18, 5, 4, 0.78), rgba(18, 5, 4, 0.94));
+}
+
+.admin-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    border-bottom: 1px solid var(--border-gold);
+}
+
+.admin-logo {
+    width: 96px;
+    height: auto;
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.6));
+}
+
+.admin-brand {
+    text-align: left;
+    line-height: 1.2;
+    color: var(--gold-light);
+}
+
+.admin-brand h2 {
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+}
+
+.admin-brand h1 {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+.admin-brand small {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--text-muted);
+}
+
+.admin-label i {
+    margin-right: 0.35rem;
+}
+
+.admin-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+
+.admin-card-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1.2rem 0.6rem;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-gold);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: border-color 0.25s, transform 0.15s, color 0.25s;
+}
+
+.admin-card-btn i {
+    font-size: 1.4rem;
+    color: var(--gold-primary);
+}
+
+.admin-card-btn:hover {
+    border-color: var(--gold-primary);
+    color: var(--gold-light);
+    transform: translateY(-2px);
+}
+
+.admin-footer {
+    padding: 1rem;
+    border-top: 1px solid var(--border-gold);
+    text-align: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+@media (max-width: 600px) {
+    .admin-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .admin-brand {
+        text-align: center;
+    }
+
+    body {
+        padding: 1rem;
+    }
+
+    .admin-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .admin-content h1 {
+        font-size: 2rem;
+    }
+}

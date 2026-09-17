@@ -1,78 +1,95 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Criar conta | Adega Caminho Novo</title>
-  <th:block th:replace="~{fragments/layout :: head-assets}"></th:block>
-  <link rel="stylesheet" th:href="@{/css/auth.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro - Adega Caminho Novo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/register.css}">
 </head>
-<body class="auth-page">
 
-<div th:replace="~{fragments/layout :: header('register', true)}"></div>
+<body>
 
-<main class="auth-main">
-  <div class="auth-card auth-card-wide">
+<div class="register-container">
 
-    <a class="auth-brand" th:href="@{/}">
-      <h2>ADEGA</h2>
-      <h1>CAMINHO NOVO</h1>
-      <small>VINHOS 100% NACIONAIS</small>
-    </a>
-
-    <div class="auth-divider">&#9670;</div>
-
-    <h3 class="auth-title">CRIAR CONTA</h3>
-    <p class="auth-subtitle">Cadastre-se para comprar os melhores vinhos nacionais.</p>
-
-    <form th:action="@{/register}" th:object="${registroForm}" method="post" novalidate>
-
-      <div class="form-group">
-        <label for="nome">NOME COMPLETO</label>
-        <input type="text" id="nome" th:field="*{nome}"
-               th:classappend="${#fields.hasErrors('nome')} ? ' input-error' : ''"
-               placeholder="Como devemos te chamar">
-        <span class="field-error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
-      </div>
-
-      <div class="form-group">
-        <label for="email">E-MAIL</label>
-        <input type="email" id="email" th:field="*{email}"
-               th:classappend="${#fields.hasErrors('email')} ? ' input-error' : ''"
-               placeholder="seu@email.com">
-        <span class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-      </div>
-
-      <div class="form-group">
-        <label for="senha">SENHA</label>
-        <input type="password" id="senha" th:field="*{senha}"
-               th:classappend="${#fields.hasErrors('senha')} ? ' input-error' : ''"
-               placeholder="Mínimo 8 caracteres">
-        <span class="field-error" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></span>
-        <p class="password-hint">Use ao menos 8 caracteres, com pelo menos uma letra e um número.</p>
-      </div>
-
-      <div class="form-group">
-        <label for="confirmacaoSenha">CONFIRMAR SENHA</label>
-        <input type="password" id="confirmacaoSenha" th:field="*{confirmacaoSenha}"
-               th:classappend="${#fields.hasErrors('confirmacaoSenha')} ? ' input-error' : ''"
-               placeholder="Repita a senha">
-        <span class="field-error" th:if="${#fields.hasErrors('confirmacaoSenha')}"
-              th:errors="*{confirmacaoSenha}"></span>
-      </div>
-
-      <button type="submit" class="btn-auth">CADASTRAR</button>
-    </form>
-
-    <div class="auth-links">
-      Já tem uma conta?
-      <a th:href="@{/login}">Voltar para o login</a>
+    <div class="register-image-logo-container">
+        <img th:src="@{/images/caminhonovologo.png}" alt="Logo Adega Caminho Novo">
+        <div class="brand-text">
+            <h2>ADEGA</h2>
+            <h1>CAMINHO NOVO</h1>
+            <small>VINHOS 100% NACIONAIS</small>
+        </div>
     </div>
 
-  </div>
-</main>
+    <div class="register-form">
 
-<div th:replace="~{fragments/layout :: footer}"></div>
+        <h2 class="register-title">CRIE SUA CONTA</h2>
+
+        <div th:if="${erro}" class="register-message">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span th:text="${erro}"></span>
+        </div>
+
+        <form th:action="@{/register}" method="post">
+
+            <div class="input-group">
+                <i class="fa-regular fa-user input-icon"></i>
+                <input type="text" name="nome" th:value="${nome}" placeholder="Nome completo" autocomplete="name" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" name="email" th:value="${email} ?: ${param.email}" placeholder="E-mail" autocomplete="email" required>
+            </div>
+
+            <div class="register-row">
+                <div class="input-group">
+                    <i class="fa-regular fa-id-card input-icon"></i>
+                    <input type="text" name="cpf" th:value="${cpf}" placeholder="CPF" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-regular fa-address-card input-icon"></i>
+                    <input type="text" name="rg" th:value="${rg}" placeholder="RG" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-location-dot input-icon"></i>
+                <input type="text" name="endereco" th:value="${endereco}" placeholder="Endereço de entrega" autocomplete="street-address" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" name="senha" placeholder="Senha" autocomplete="new-password" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" name="confirmarSenha" placeholder="Confirmar senha" autocomplete="new-password" required>
+            </div>
+
+            <p class="register-hint">A senha deve ter no mínimo 8 caracteres, com letras e números.</p>
+
+            <div class="register-button-container">
+                <button type="submit">REGISTRAR</button>
+            </div>
+
+        </form>
+
+        <div class="register-redirect-options">
+            Já possui conta? <a th:href="@{/login}">Faça login</a>
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>

@@ -27,8 +27,3 @@ build/
 !**/src/test/**/build/
 
 .vscode/
-
-/data/
-*.db
-*.mv.db
-*.trace.db
