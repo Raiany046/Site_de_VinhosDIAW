@@ -25,11 +25,9 @@
     <h3 class="auth-title">ENTRAR</h3>
     <p class="auth-subtitle">Acesse sua conta para acompanhar pedidos e ofertas exclusivas.</p>
 
-    <!-- mensagens de erro e de sucesso -->
     <div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
     <div class="alert alert-success" th:if="${sucesso}" th:text="${sucesso}"></div>
 
-    <!-- o POST e tratado pelo Spring Security -->
     <form th:action="@{/login}" method="post">
 
       <div class="form-group">

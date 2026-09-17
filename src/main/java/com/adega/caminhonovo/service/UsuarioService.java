@@ -28,7 +28,6 @@ public class UsuarioService {
             throw new EmailJaCadastradoException(email);
         }
 
-        // a senha so vai para o banco depois de virar hash
         Usuario usuario = new Usuario(
                 form.getNome().trim(),
                 email,
@@ -37,12 +36,10 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    @Transactional(readOnly = true)
     public Optional<Usuario> buscarPorEmail(String email) {
         return usuarioRepository.findByEmailIgnoreCase(normalizarEmail(email));
     }
 
-    @Transactional(readOnly = true)
     public boolean emailExiste(String email) {
         return usuarioRepository.existsByEmailIgnoreCase(normalizarEmail(email));
     }

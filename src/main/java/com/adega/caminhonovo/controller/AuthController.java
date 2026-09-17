@@ -7,14 +7,12 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-// O POST /login nao aparece aqui porque quem processa o login e o Spring Security.
 @Controller
 public class AuthController {
 
@@ -43,8 +41,10 @@ public class AuthController {
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
-        model.addAttribute("registroForm", new RegistroForm());
+    public String register(@RequestParam(required = false) String email, Model model) {
+        RegistroForm registroForm = new RegistroForm();
+        registroForm.setEmail(email);
+        model.addAttribute("registroForm", registroForm);
         return "register";
     }
 
@@ -53,7 +53,6 @@ public class AuthController {
                                     BindingResult resultado,
                                     RedirectAttributes redirectAttributes) {
 
-        // essa validacao usa dois campos, por isso nao da para fazer com anotacao
         if (!registroForm.senhasConferem()) {
             resultado.rejectValue("confirmacaoSenha", "senhas.diferentes",
                     "As senhas informadas não são iguais.");
@@ -66,9 +65,8 @@ public class AuthController {
         try {
             usuarioService.registrar(registroForm);
         } catch (EmailJaCadastradoException e) {
-            resultado.addError(new FieldError("registroForm", "email",
-                    registroForm.getEmail(), false, null, null,
-                    "Este e-mail já está cadastrado. Tente fazer login."));
+            resultado.rejectValue("email", "email.duplicado",
+                    "Este e-mail já está cadastrado. Tente fazer login.");
             return "register";
         }
 
@@ -92,7 +90,6 @@ public class AuthController {
         System.out.println("Recuperação de senha solicitada para: " + email
                 + " (cadastrado: " + usuarioService.emailExiste(email) + ")");
 
-        // a resposta e a mesma para qualquer e-mail, para nao revelar quem tem conta
         model.addAttribute("sucesso",
                 "Se houver uma conta associada a " + email
                         + ", enviaremos as instruções de redefinição de senha.");

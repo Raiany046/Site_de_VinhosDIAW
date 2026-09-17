@@ -28,12 +28,10 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/", "/home").permitAll()
                         .requestMatchers("/login", "/register", "/recoverpassword").permitAll()
-                        // as demais rotas, como /minha-conta, exigem login
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        // o formulario usa "email" no lugar do "username" padrao
                         .usernameParameter("email")
                         .passwordParameter("senha")
                         .defaultSuccessUrl("/minha-conta", true)
@@ -45,7 +43,6 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 )
-                // o console do H2 roda dentro de um frame e nao envia o token CSRF
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
 
