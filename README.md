@@ -206,3 +206,7 @@ ao tentar enviar o e-mail.
 | <img src="imgs/admin.png" alt="Admin" width="1000"/> |
 |:---:|
 | Admin |
+
+| <img src="imgs/emailrecuperacao.png" alt="recupercao" width="1000"/> |
+|:---:|
+| email_recuperacao |
