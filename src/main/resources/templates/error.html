@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Erro de Acesso - Adega Caminho Novo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/error.css}">
+</head>
+
+<body>
+
+<div class="error-container">
+
+    <div class="error-image-logo-container">
+        <img th:src="@{/images/caminhonovologo.png}" alt="Logo Adega Caminho Novo">
+        <div class="brand-text">
+            <h2>ADEGA</h2>
+            <h1>CAMINHO NOVO</h1>
+            <small>VINHOS 100% NACIONAIS</small>
+        </div>
+    </div>
+
+    <div class="error-form">
+
+        <form th:action="@{/login}" method="post">
+
+            <h4 class="error-title">ACESSAR CONTA</h4>
+
+            <div class="error-message">
+                <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+                <div class="error-text">
+                    <strong>Falha ao efetuar o login!</strong>
+                    <span>Usuário ou senha incorretos. Por favor, tente novamente.</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-regular fa-user input-icon"></i>
+                <input type="text" id="username" name="username" placeholder="Usuário ou E-mail" required autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="password" name="password" placeholder="Senha" required>
+            </div>
+
+            <div class="error-button-container">
+                <button type="submit" class="btn-submit">ENTRAR</button>
+            </div>
+
+            <p class="error-redirect-options">
+                <a th:href="@{/register}">Cadastre-se</a>
+                <span class="divider">❖</span>
+                <a th:href="@{/recoverpassword}">Esqueceu a senha?</a>
+            </p>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

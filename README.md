@@ -3,10 +3,10 @@
 Aplicação web desenvolvida com **Spring Boot + Thymeleaf** para a **Atividade 02** da disciplina
 *Desenvolvimento e Integração de Aplicações Web* (PUC Minas).
 
-O sistema implementa **autenticação e cadastro de usuários** integrados ao site da Adega Caminho
-Novo, uma loja fictícia de vinhos 100% nacionais. As telas de login, cadastro e recuperação de
-senha seguem a mesma identidade visual do site: tema escuro em tons de vinho e dourado, com
-as fontes Cormorant Garamond nos títulos e Lato nos textos e formulários.
+O projeto segue como base o exemplo **SecureLoginPUC_3** do professor: autenticação com Spring
+Security, usuários comum e administrador, cadastro de novos usuários e recuperação de senha com
+envio de e-mail. As telas usam a identidade visual da Adega Caminho Novo, uma loja fictícia de
+vinhos 100% nacionais.
 
 ---
 
@@ -26,66 +26,46 @@ as fontes Cormorant Garamond nos títulos e Lato nos textos e formulários.
 | Maven | wrapper incluso (`./mvnw`) |
 | Empacotamento | jar |
 
-**Dependências principais:** Spring Web MVC, Thymeleaf, Spring Security, Spring Data JPA,
-Bean Validation e banco H2.
+**Dependências:** Spring Web MVC, Thymeleaf, Spring Security e Spring Mail (Java Mail Sender).
 
 ---
 
-## 🖼️ Telas
+## 📁 Estrutura do Projeto
 
-### Login (`/login`)
-
-![Tela de login](imgs/login.png)
-
-### Cadastro (`/register`)
-
-![Tela de cadastro](imgs/register.png)
-
-As validações são exibidas abaixo de cada campo, com o campo destacado:
-
-![Validações do cadastro](imgs/register-validacoes.png)
-
-### Recuperação de senha (`/recoverpassword`)
-
-![Tela de recuperação de senha](imgs/recoverpassword.png)
-
-### Área restrita (`/minha-conta`)
-
-Acessível apenas com sessão autenticada:
-
-![Minha conta](imgs/minha-conta.png)
-
-### Home da loja (`/`)
-
-![Home](imgs/home.png)
-
----
-
-## 🔐 Como a autenticação funciona
-
-- O login é feito pelo **e-mail** (`usernameParameter("email")`), não por um nome de usuário.
-- As senhas **nunca são gravadas em texto puro**: o `UsuarioService` aplica **BCrypt**
-  (`BCryptPasswordEncoder`) antes de salvar, e o banco guarda apenas o hash.
-- O `UsuarioDetailsService` liga o Spring Security à tabela `usuario`, carregando o usuário
-  pelo e-mail informado.
-- Rotas públicas e protegidas são declaradas no `SecurityConfig`. Qualquer rota não listada
-  como pública exige sessão autenticada — é o caso de `/minha-conta`.
-- O envio do formulário de login é tratado pelo **próprio Spring Security**; por isso não
-  existe um `POST /login` no controller.
-- O logout é feito por `POST /logout` (com token CSRF gerado automaticamente pelo Thymeleaf).
-
-### Validações do cadastro
-
-O formulário de cadastro (`POST /register`) impede:
-
-- campos obrigatórios vazios;
-- nome com menos de 3 caracteres;
-- e-mail em formato inválido;
-- senha com menos de 8 caracteres ou sem pelo menos uma letra e um número;
-- senha e confirmação diferentes;
-- e-mail já cadastrado (comparação sem diferenciar maiúsculas de minúsculas).
-
-Os erros aparecem abaixo do campo correspondente, e o campo é destacado em vermelho.
+```text
+📁 Site_de_VinhosDIAW
+│
+├── 📁 src/main
+│   ├── ☕ java/com/adega/caminhonovo
+│   │   ├── 🚀 application
+│   │   │   └── AdegaCaminhoNovoApplication.java   → classe principal
+│   │   ├── 🔐 config
+│   │   │   ├── SecurityConfig.java                → regras do Spring Security
+│   │   │   └── UserConfig.java                    → usuários lidos do application.properties
+│   │   ├── 🎮 controller
+│   │   │   └── SecureLoginController.java         → rotas da aplicação
+│   │   ├── ⚠️ exception
+│   │   │   ├── GlobalExceptionHandler.java        → tratamento global de exceções
+│   │   │   └── SendEmailException.java            → erro no envio de e-mail
+│   │   └── ⚙️ service
+│   │       ├── SendEmailService.java              → envio de e-mails
+│   │       └── UserService.java                   → cadastro de usuários
+│   │
+│   └── 📁 resources
+│       ├── ⚙️ application.properties
+│       ├── 🎨 static
+│       │   ├── css      → admin, error, home, login, recoverpassword, register
+│       │   └── images   → logo, fundo e imagens dos vinhos
+│       └── 🌐 templates
+│           ├── admin.html            → área administrativa
+│           ├── error.html            → erro de login
+│           ├── home.html             → página inicial da loja, exibida após o login
+│           ├── login.html            → login
+│           ├── recoverpassword.html  → recuperação de senha
+│           └── register.html         → cadastro de usuários
+│
+└── 📄 pom.xml
+```
 
 ---
 
@@ -93,150 +73,136 @@ Os erros aparecem abaixo do campo correspondente, e o campo é destacado em verm
 
 | Método | Endpoint | Acesso | Descrição |
 | --- | --- | --- | --- |
-| `GET` | `/login` | público | Exibe a tela de login |
-| `GET` | `/register` | público | Exibe a tela de cadastro |
-| `POST` | `/register` | público | Processa o cadastro e redireciona para `/login?cadastro=ok` |
-| `GET` | `/recoverpassword` | público | Exibe a tela de recuperação de senha |
-| `POST` | `/recoverpassword` | público | Processa a solicitação de recuperação |
+| `GET` | `/login` | público | Tela de login |
+| `POST` | `/login` | público | Processado pelo Spring Security |
+| `GET` | `/register` | público | Tela de cadastro |
+| `POST` | `/register` | público | Valida e cadastra o usuário |
+| `GET` | `/recoverpassword` | público | Tela de recuperação de senha |
+| `POST` | `/recoverpassword` | público | Envia o e-mail de recuperação |
+| `GET` | `/error` | público | Tela exibida quando o login falha |
+| `GET` | `/home` | autenticado | Página inicial da loja, com o usuário logado no topo |
+| `GET` | `/admin` | somente `ADMIN` | Área administrativa |
 | `POST` | `/logout` | autenticado | Encerra a sessão |
-| `GET` | `/` e `/home` | público | Página inicial da loja |
-| `GET` | `/minha-conta` | **autenticado** | Área restrita com os dados do usuário logado |
-| `GET` | `/h2-console` | público (dev) | Console do banco H2 |
 
-> O `POST /login` não aparece na lista porque é interceptado pelo filtro do Spring Security,
-> conforme permitido no enunciado da atividade.
+URLs para testar:
+
+- http://localhost:8080/login
+- http://localhost:8080/login?logout=true
+- http://localhost:8080/home
+- http://localhost:8080/admin
+- http://localhost:8080/error
+- http://localhost:8080/register
+- http://localhost:8080/recoverpassword
+
+---
+
+## 🔐 Autenticação
+
+- Os usuários ficam em memória (`InMemoryUserDetailsManager`), e as senhas são gravadas com
+  **BCrypt**.
+- Dois usuários são criados ao iniciar a aplicação, a partir do `application.properties`:
+
+| Perfil | Usuário | Senha |
+| --- | --- | --- |
+| Usuário comum | `joao` | `4321` |
+| Administrador | `admin` | `1234` |
+
+- Após o login, o administrador é redirecionado para `/admin` e o usuário comum para `/home`.
+- Login inválido redireciona para `/error`.
+- Usuários cadastrados em `/register` entram com o **e-mail** e a senha escolhida. Como ficam em
+  memória, esses cadastros são perdidos quando a aplicação é reiniciada.
+
+### Validações do cadastro
+
+- todos os campos obrigatórios;
+- e-mail em formato válido;
+- senha com no mínimo 8 caracteres, com letras e números;
+- senha e confirmação iguais;
+- e-mail ainda não cadastrado.
 
 ---
 
 ## ▶️ Como executar
 
-Pré-requisitos: **JDK 25** instalado (`java -version`). O Maven não precisa estar instalado —
-o projeto traz o wrapper.
+Pré-requisito: **JDK 25** instalado.
 
 ```bash
-# clonar e entrar na pasta
 git clone https://github.com/Raiany046/Site_de_VinhosDIAW.git
 cd Site_de_VinhosDIAW
-
-# rodar
 ./mvnw spring-boot:run
 ```
 
-No Windows, use `mvnw.cmd spring-boot:run`.
-
-A aplicação sobe em **http://localhost:8080**.
-
-Para rodar os testes:
-
-```bash
-./mvnw test
-```
-
-Para gerar o jar executável:
-
-```bash
-./mvnw clean package
-java -jar target/caminho-novo-0.0.1-SNAPSHOT.jar
-```
-
-### Roteiro rápido de teste
-
-1. Abra <http://localhost:8080> — a home da loja aparece sem exigir login.
-2. Clique no ícone de usuário (ou vá em <http://localhost:8080/register>) e crie uma conta.
-3. Você é redirecionado ao login com a mensagem de cadastro concluído.
-4. Faça login: o sistema leva você para `/minha-conta`, a área protegida.
-5. Tente abrir <http://localhost:8080/minha-conta> em uma janela anônima — o Spring Security
-   redireciona para `/login`.
-6. Clique em **SAIR** para encerrar a sessão.
+No Windows, use `mvnw.cmd spring-boot:run`. A aplicação sobe em http://localhost:8080/login.
 
 ---
 
-## ⚙️ Configuração do ambiente
-
-Toda a configuração fica em `src/main/resources/application.properties`.
-
-### Banco de dados
-
-O projeto usa **H2 em arquivo**, então **não é necessário instalar nenhum banco**. Os dados
-ficam em `./data/adega.mv.db`, que está no `.gitignore` — os cadastros continuam valendo entre
-reinícios da aplicação, mas não vão para o repositório.
-
-O schema é criado automaticamente pelo Hibernate (`spring.jpa.hibernate.ddl-auto=update`).
-
-### Console do H2
-
-Com a aplicação rodando, acesse <http://localhost:8080/h2-console> para inspecionar a tabela
-`USUARIO` e confirmar que as senhas estão gravadas como hash BCrypt (começam com `$2a$`).
-
-| Campo | Valor |
-| --- | --- |
-| JDBC URL | `jdbc:h2:file:./data/adega;AUTO_SERVER=TRUE` |
-| User Name | `sa` |
-| Password | *(vazio)* |
-
-> O console do H2 está liberado apenas para facilitar a correção. Em um ambiente real ele
-> deve ficar desativado.
-
-### Credenciais
-
-O projeto **não contém senhas, tokens ou chaves de API** no código-fonte. As credenciais do
-banco são lidas de variáveis de ambiente, com um valor padrão para desenvolvimento:
+## ⚙️ Configuração do application.properties
 
 ```properties
-spring.datasource.username=${DB_USER:sa}
-spring.datasource.password=${DB_PASSWORD:}
+spring.application.name=Adega Caminho Novo
+app.user.username=joao
+app.user.password=4321
+app.admin.username=admin
+app.admin.password=1234
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=${MAIL_USERNAME:}
+spring.mail.password=${MAIL_PASSWORD:}
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
 ```
 
-Para usar outras credenciais, basta definir `DB_USER` e `DB_PASSWORD` no ambiente antes de
-subir a aplicação.
+### 🔑 Credenciais do e-mail
+
+O e-mail e a senha usados no envio **não ficam no código**. Eles são lidos das variáveis de
+ambiente `MAIL_USERNAME` e `MAIL_PASSWORD`.
+
+1. Ative a verificação em duas etapas na conta Gmail.
+2. Gere uma **senha de app** em https://myaccount.google.com/apppasswords.
+3. Defina as variáveis antes de rodar a aplicação:
+
+```bash
+export MAIL_USERNAME=seuemail@gmail.com
+export MAIL_PASSWORD=suasenhadeapp
+./mvnw spring-boot:run
+```
+
+No Windows (PowerShell):
+
+```powershell
+$env:MAIL_USERNAME="seuemail@gmail.com"
+$env:MAIL_PASSWORD="suasenhadeapp"
+.\mvnw.cmd spring-boot:run
+```
+
+Sem essas variáveis a aplicação funciona normalmente, mas a recuperação de senha retorna erro
+ao tentar enviar o e-mail.
 
 ---
 
-## 📁 Estrutura do projeto
+## 🖼️ Telas
 
-```text
-Site_de_VinhosDIAW/
-├── pom.xml
-├── mvnw / mvnw.cmd            # Maven wrapper
-└── src/
-    ├── main/
-    │   ├── java/com/adega/caminhonovo/
-    │   │   ├── application/   # classe principal (AdegaCaminhoNovoApplication)
-    │   │   ├── config/        # SecurityConfig (filtros, BCrypt, form login)
-    │   │   ├── controller/    # AuthController e SiteController
-    │   │   ├── dto/           # RegistroForm (validações do cadastro)
-    │   │   ├── model/         # Usuario (entidade JPA)
-    │   │   ├── repository/    # UsuarioRepository
-    │   │   └── service/       # UsuarioService e UsuarioDetailsService
-    │   └── resources/
-    │       ├── application.properties
-    │       ├── static/
-    │       │   ├── css/       # style.css (site) e auth.css (telas de acesso)
-    │       │   └── img/       # imagens e logos da loja
-    │       └── templates/
-    │           ├── fragments/layout.html   # top bar, header e rodapé reutilizáveis
-    │           ├── login.html
-    │           ├── register.html
-    │           ├── recoverpassword.html
-    │           ├── home.html
-    │           └── minha-conta.html
-    └── test/java/com/adega/caminhonovo/
-        └── AdegaCaminhoNovoApplicationTests.java
-```
+| <img src="imgs/login.png" alt="Login" width="1000"/> |
+|:---:|
+| Login |
 
-Como a classe principal fica em `application/` e não na raiz do pacote, os pacotes de
-entidades e repositórios são declarados explicitamente com `@EntityScan` e
-`@EnableJpaRepositories`.
+| <img src="imgs/register.png" alt="Register" width="1000"/> |
+|:---:|
+| Register |
 
----
+| <img src="imgs/recoverpassword.png" alt="Recover Password" width="1000"/> |
+|:---:|
+| Recover Password |
 
-## 📌 Observações
+| <img src="imgs/error.png" alt="Error" width="1000"/> |
+|:---:|
+| Error |
 
-- **Recuperação de senha:** o desafio opcional de envio de e-mail não foi implementado.
-  Os endpoints `GET`/`POST /recoverpassword` exigidos existem e funcionam: a tela valida o
-  campo e responde com uma mensagem neutra — igual para e-mails cadastrados e não cadastrados,
-  para não revelar quais endereços possuem conta.
-- **Páginas da loja:** o escopo desta atividade é o fluxo de login e cadastro, então a única
-  página da loja implementada é a home (`/`). Os demais itens do menu e dos banners ficam sem
-  destino por enquanto — quando cada seção for construída, basta criar o template, adicionar a
-  rota no `SiteController` e liberá-la em `ROTAS_PUBLICAS` no `SecurityConfig`.
+| <img src="imgs/home.png" alt="Home" width="1000"/> |
+|:---:|
+| Home |
+
+| <img src="imgs/admin.png" alt="Admin" width="1000"/> |
+|:---:|
+| Admin |

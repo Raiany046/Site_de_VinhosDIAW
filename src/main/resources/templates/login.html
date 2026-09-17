@@ -1,61 +1,80 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Entrar | Adega Caminho Novo</title>
-  <th:block th:replace="~{fragments/layout :: head-assets}"></th:block>
-  <link rel="stylesheet" th:href="@{/css/auth.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Adega Caminho Novo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
-<body class="auth-page">
 
-<div th:replace="~{fragments/layout :: header('login', true)}"></div>
+<body>
 
-<main class="auth-main">
-  <div class="auth-card">
+<div class="login-container">
 
-    <a class="auth-brand" th:href="@{/}">
-      <h2>ADEGA</h2>
-      <h1>CAMINHO NOVO</h1>
-      <small>VINHOS 100% NACIONAIS</small>
-    </a>
-
-    <div class="auth-divider">&#9670;</div>
-
-    <h3 class="auth-title">ENTRAR</h3>
-    <p class="auth-subtitle">Acesse sua conta para acompanhar pedidos e ofertas exclusivas.</p>
-
-    <div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
-    <div class="alert alert-success" th:if="${sucesso}" th:text="${sucesso}"></div>
-
-    <form th:action="@{/login}" method="post">
-
-      <div class="form-group">
-        <label for="email">E-MAIL</label>
-        <input type="email" id="email" name="email"
-               placeholder="seu@email.com" required autofocus>
-      </div>
-
-      <div class="form-group">
-        <label for="senha">SENHA</label>
-        <input type="password" id="senha" name="senha"
-               placeholder="Sua senha" required>
-      </div>
-
-      <button type="submit" class="btn-auth">ENTRAR</button>
-    </form>
-
-    <div class="auth-links">
-      <a th:href="@{/recoverpassword}">Esqueci minha senha</a>
-      <hr class="auth-links-separator">
-      Ainda não tem conta?
-      <a th:href="@{/register}">Cadastre-se</a>
+    <div class="login-image-logo-container">
+        <img th:src="@{/images/caminhonovologo.png}" alt="Logo Adega Caminho Novo">
+        <div class="brand-text">
+            <h2>ADEGA</h2>
+            <h1>CAMINHO NOVO</h1>
+            <small>VINHOS 100% NACIONAIS</small>
+        </div>
     </div>
 
-  </div>
-</main>
+    <div class="login-form">
 
-<div th:replace="~{fragments/layout :: footer}"></div>
+        <form th:action="@{/login}" method="post" class="login-form-content">
+
+            <h4 class="login-title">ACESSAR CONTA</h4>
+
+            <div th:if="${param.cadastro}" class="login-message">
+                <strong>Cadastro realizado com sucesso!</strong>
+                <span>Agora você já pode fazer login.</span>
+            </div>
+
+            <div th:if="${param.recuperacao}" class="login-message">
+                <strong>E-mail enviado!</strong>
+                <span>Confira sua caixa de entrada para recuperar a senha.</span>
+            </div>
+
+            <div th:if="${param.logout}" class="login-message">
+                <strong>Você saiu da sua conta.</strong>
+                <span>Até a próxima!</span>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-regular fa-user input-icon"></i>
+                <input type="text" id="username" name="username" placeholder="Usuário ou E-mail" autocomplete="username" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="password" name="password" placeholder="Senha" autocomplete="current-password" required>
+            </div>
+
+            <div class="login-button-container">
+                <button type="submit">ENTRAR</button>
+            </div>
+
+            <p class="login-redirect-options">
+                Ainda não tem cadastro?
+                <br>
+                <a th:href="@{/register}">Cadastre-se</a>
+                <span class="divider">❖</span>
+                <a th:href="@{/recoverpassword}">Esqueceu a senha?</a>
+            </p>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>
